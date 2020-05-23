@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+
+import {bindActionCreators} from 'redux';
+
 import {MdAddShoppingCart} from 'react-icons/md';
 import {formatPrice} from '../../util/format';
 import api from '../../services/api';
 import {ProductList} from './styles';
+
+import * as CartActions from '../../store/modules/cart/actions'; //com * acessa as duas funções
 
  class Home extends Component {
   state = {
@@ -22,12 +27,9 @@ import {ProductList} from './styles';
   }
 
   handleAddProduct = product => {
-    const {dispatch} = this.props;
+    const {addToCart} = this.props;
 
-    dispatch({
-      type: 'ADD_TO_CART',
-      product,
-    });
+    addToCart(product);
   };
 
   render(){
@@ -56,4 +58,6 @@ import {ProductList} from './styles';
   }
 }
 
-export default connect()(Home);
+const mapDispatchToProps = dispatch => bindActionCreators(CartActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Home);

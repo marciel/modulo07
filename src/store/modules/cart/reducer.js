@@ -5,7 +5,7 @@ export default function cart(state = [], action){
   //console.log(action;
   //Cria o switch para realizar apenas a ação conforme o tipo para que não envie para todos os reducers
   switch(action.type){
-    case 'ADD_TO_CART':
+    case '@cart/ADD':
        return produce(state, draft => {
          const productIndex = draft.findIndex(p => p.id === action.product.id);
 
@@ -20,7 +20,7 @@ export default function cart(state = [], action){
 
        });
 
-    case 'REMOVE_FROM_CART':
+    case '@cart/REMOVE':
       return produce(state, draft => {
         const productIndex = draft.findIndex(p => p.id === action.id); //id está vindo direto da action
 
