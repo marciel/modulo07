@@ -34,6 +34,7 @@ import * as CartActions from '../../store/modules/cart/actions'; //com * acessa 
 
   render(){
     const {products} = this.state;
+    const {amount} = this.props;
 
     return (
       <ProductList>
@@ -48,6 +49,7 @@ import * as CartActions from '../../store/modules/cart/actions'; //com * acessa 
             <button type="button" onClick={() => this.handleAddProduct(product)}>
               <div>
                 <MdAddShoppingCart size={16} color="#FFF" />
+                {amount[product.id] || 0}
               </div>
               <span>ADICIONAR AO CARRINHO</span>
             </button>
@@ -58,6 +60,13 @@ import * as CartActions from '../../store/modules/cart/actions'; //com * acessa 
   }
 }
 
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount,product)=>{
+    amount[product.id] = product.amount;
+    return amount;
+  },{}),
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators(CartActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
